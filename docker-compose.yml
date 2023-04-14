@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:1.0.0
+    secrets:
+      - mysql_root
+      - mysql_db
+      - mysql_usr
+      - mysql_pw
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root
+      MYSQL_DATABASE_FILE: /run/secrets/mysql_db
+      MYSQL_USER_FILE: /run/secrets/mysql_usr
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_pw
+    build:
+      context: /opt/docker/mysql
+      dockerfile: mysql/Dockerfile
+      args:
+        DOCKER_BUILDKIT: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+    restart: on-failure
+    security_opt:
+      - seccomp:unconfined
+    command: --default_authentication-plugin=mysql_native_password
+    networks:
+      - mysql-net
+    expose: 
+      - 3306
+    volumes:
+      - /opt/docker/mysql/mysql/src:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql
+
+secrets:
+  mysql_root:
+    file: /opt/docker/mysql/.secrets/.mysql_root
+  mysql_db:
+    file: /opt/docker/mysql/.secrets/.mysql_db
+  mysql_usr:
+    file: /opt/docker/mysql/.secrets/.mysql_usr
+  mysql_pw:
+    file: /opt/docker/mysql/.secrets/.mysql_pw
+
+networks:
+  mysql-net:
+    name: mysql-net
+    external: true
+
+volumes:
+  mysql-data:
