@@ -1,10 +1,13 @@
-# This repo builds and deploys a mysql stack service that can optionally be initialized from backup dump file(s)
+## This repo can be used to build and deploy a mysql stack service that can optionally be initialized from backup dump file(s) placed in the mysql/src folder
 ## Folder structure:
 * .secrets
    * .gitignore
 * mysql
    * src
      * .gitignore
+   * Dockerfile
+* docker-compose.yml
+* README.md
 
 The .gitignore files ensure folder contents are never published to github by only publishing the .gitignore file itself
 
@@ -30,7 +33,7 @@ The .gitignore files ensure folder contents are never published to github by onl
     nano .secrets/mysql_usr
     nano .secrets/mysql_pw
 ```
-       Note: Add desired secret value to each secret file before saving. Do not surround values with quotes
+       Note: Add desired secret value to each file before saving - Do not surround values with quotes
 
 6. Build docker image using 4 build secrets created in step 5 - update image name and tag as needed
 ```sh
