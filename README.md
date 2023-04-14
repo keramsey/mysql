@@ -9,7 +9,7 @@
 * docker-compose.yml
 * README.md
 
-The .gitignore files ensure folder contents are never published to github. The .gitignore file itself is the only file in folder that is published to github
+The .gitignore files ensure folder contents are never published to github. The .gitignore file is the only file in folder published to github
 
 ## Build and deploy mysql stack service using docker build secrets
 1. Login to ssh terminal (swarm server)
